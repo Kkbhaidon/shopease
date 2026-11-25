@@ -21,7 +21,7 @@ section{max-width:1120px;margin:55px auto;padding:0 18px}.eyebrow{color:#e9c77d;
 h1,h2{text-align:center;margin:10px 0 18px}h2{font-size:30px}.intro{text-align:center;color:#d9cbd3;max-width:680px;margin:0 auto 26px;line-height:1.6}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
 .card{background:#21151f;border:1px solid #ffffff18;border-radius:17px;overflow:hidden}
-.card .visual{height:190px;background:linear-gradient(135deg,#4a1730,#170d16);display:flex;align-items:center;justify-content:center;color:#f8d9e7;font-size:54px}
+.card .visual{height:260px;background:linear-gradient(135deg,#4a1730,#170d16);display:flex;align-items:center;justify-content:center;overflow:hidden}.card .visual img{width:100%;height:100%;object-fit:contain;padding:8px;display:block}.discount{display:inline-block;background:#a90c4c;color:#fff;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:800;margin-left:6px}
 .card .body{padding:17px}.card h3{margin:0 0 8px}.muted{color:#c8b9c2;font-size:13px;line-height:1.5}
 .price{font-size:22px;font-weight:900;color:#ffe2a0;margin:12px 0}.old{font-size:14px;color:#a99aa3;text-decoration:line-through;margin-left:7px}
 .tag{display:inline-block;background:#562039;color:#ffd8e7;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700}
@@ -54,14 +54,14 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
  <div class="eyebrow">Find your signature scent</div><h2>Shop Our Fragrance</h2>
  <p class="intro">A little fragrance can make an ordinary day feel special. Explore Riya Melody and place your order with Cash on Delivery.</p>
  <div class="products">
-  <article class="card"><div class="visual">🌸</div><div class="body"><span class="tag">SWEET & FEMININE</span><h3>Riya Melody – Raspberry Candy</h3><p class="muted">A sweet, fruity-floral fragrance with raspberry, pear, jasmine and amber-candy inspired notes.</p><div class="price">₹220 <span class="old">₹315</span></div><button class="btn" onclick="openOrder('Riya Melody – Raspberry Candy',220)">Order Now</button></div></article>
-  <article class="card"><div class="visual">🌷</div><div class="body"><span class="tag">AVAILABLE VARIANT</span><h3>Riya Melody – 30ml</h3><p class="muted">A compact size for your everyday fragrance routine.</p><div class="price">₹220</div><button class="btn" onclick="openOrder('Riya Melody – 30ml',220)">Order Now</button></div></article>
-  <article class="card"><div class="visual">✨</div><div class="body"><span class="tag">AVAILABLE VARIANT</span><h3>Riya Melody – 50ml</h3><p class="muted">A larger size for fragrance lovers.</p><div class="price">₹220</div><button class="btn" onclick="openOrder('Riya Melody – 50ml',220)">Order Now</button></div></article>
+  <article class="card"><div class="visual"><img src="assets/riya-melody-30ml-premium.png" alt="Riya Melody 30ml perfume"></div><div class="body"><span class="tag">RIYA MELODY · 30ml</span><h3>Riya Melody Eau de Parfum</h3><p class="muted">An elegant everyday fragrance in a compact 30ml bottle.</p><div class="price">₹220 <span class="old">₹315</span> <span class="discount">30% OFF</span></div><p class="muted">MRP ₹315 · You save ₹95</p><button class="btn" onclick="openOrder('Riya Melody Eau de Parfum – 30ml',220)">Order Now</button></div></article>
+  <article class="card"><div class="visual"><img src="assets/riya-melody-50ml-blue.png" alt="Riya Melody 50ml perfume blue cap"></div><div class="body"><span class="tag">RIYA MELODY · 50ml</span><h3>Riya Melody Eau de Parfum</h3><p class="muted">A fresh, refined fragrance in a 50ml bottle.</p><div class="price">₹220 <span class="old">₹315</span> <span class="discount">30% OFF</span></div><p class="muted">MRP ₹315 · You save ₹95</p><button class="btn" onclick="openOrder('Riya Melody Eau de Parfum – 50ml Blue',220)">Order Now</button></div></article>
+  <article class="card"><div class="visual"><img src="assets/riya-melody-raspberry-candy.png" alt="Riya Melody Raspberry Candy perfume"></div><div class="body"><span class="tag">RASPBERRY CANDY</span><h3>Riya Melody – Raspberry Candy</h3><p class="muted">A sweet, fruity fragrance with a playful pink look.</p><div class="price">₹220 <span class="old">₹315</span> <span class="discount">30% OFF</span></div><p class="muted">MRP ₹315 · You save ₹95</p><button class="btn" onclick="openOrder('Riya Melody – Raspberry Candy',220)">Order Now</button></div></article>
  </div>
  <img class="poster" src="assets/riya-melody-fragrance-details.png" alt="Riya Melody perfume product and fragrance notes">
 </section>
 
-<section id="offer"><div class="offer"><div class="eyebrow">A little gift for your first order</div><h2>Enjoy 20% OFF</h2><p>Use this coupon at checkout for your first order.</p><div class="coupon">RIYA</div><p class="small">Coupon discount is applied to the ₹220 item price. One coupon per order.</p><button class="btn" onclick="openOrder('Riya Melody – Raspberry Candy',220)">Claim Offer</button></div></section>
+<section id="offer"><div class="offer"><div class="eyebrow">A little gift for your first order</div><h2>Enjoy 20% OFF</h2><p>Shop selected Riya Melody fragrances at 30% OFF.</p><div class="coupon">RIYA</div><p class="small">MRP ₹315 · Offer price ₹220 after approximately 30% discount. Confirm the genuine MRP before publishing.</p><button class="btn" onclick="openOrder('Riya Melody – Raspberry Candy',220)">Claim Offer</button></div></section>
 
 <section id="contact"><div class="eyebrow">We're here to help</div><h2>ShopEase</h2><p class="intro">For product questions or order assistance, contact us on WhatsApp: <b>+91 97736 08505</b>.</p><div style="text-align:center"><a class="btn" href="https://wa.me/919773608505" target="_blank" rel="noopener">Chat on WhatsApp</a></div></section>
 <footer>© <span id="year"></span> ShopEase. All rights reserved.<br>Orders are placed after you review the details and tap Send in WhatsApp.</footer>
@@ -71,7 +71,7 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <h2>Complete Your Order</h2><p class="small">Cash on Delivery • Please enter your correct delivery details.</p>
 <form id="orderForm">
 <label>Product</label><input id="product" readonly>
-<div class="row"><div><label>Quantity (Max 10)</label><input id="qty" type="number" min="1" max="10" value="1" required></div><div><label>Coupon code</label><input id="couponInput" placeholder="RIYA"></div></div>
+<div><label>Quantity (Max 10)</label><input id="qty" type="number" min="1" max="10" value="1" required></div>
 <div class="summary" id="priceSummary">Total: ₹220</div>
 <label>Full Name</label><input id="customerName" required maxlength="70" placeholder="Your name">
 <label>Mobile Number</label><input id="mobile" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number">
@@ -84,22 +84,22 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 </form></div></div>
 
 <div class="modal" id="successModal"><div class="box"><button class="close" onclick="document.getElementById('successModal').style.display='none'">×</button><h2>Order Details Ready! 💗</h2><p id="orderId"></p><p class="small">WhatsApp has opened with your order message. Please tap Send to complete your order request.</p><button class="btn" onclick="document.getElementById('successModal').style.display='none'">Okay</button></div></div>
-<div class="modal" id="couponModal"><div class="box" style="text-align:center"><button class="close" onclick="closeCoupon()">×</button><div class="eyebrow">Special welcome offer</div><h2>Get 20% OFF 💗</h2><p>Use code <b>RIYA</b> on your first order.</p><div class="coupon">RIYA</div><button class="btn" onclick="closeCoupon();openOrder('Riya Melody – Raspberry Candy',220)">Shop Now</button></div></div>
+
 
 <script>
 const WA_NUMBER='919773608505';
 let currentPrice=220;
 function openOrder(name,price){document.getElementById('product').value=name;currentPrice=price;document.getElementById('qty').value=1;document.getElementById('couponInput').value='';updateTotal();document.getElementById('orderModal').style.display='flex';}
 function closeOrder(){document.getElementById('orderModal').style.display='none'}
-function updateTotal(){let q=Math.max(1,Math.min(10,parseInt(document.getElementById('qty').value)||1));document.getElementById('qty').value=q;let sub=currentPrice*q;let coupon=document.getElementById('couponInput').value.trim().toUpperCase()==='RIYA';let discount=coupon?Math.round(sub*.20):0;document.getElementById('priceSummary').innerHTML=`Subtotal: ₹${sub}<br>Coupon discount: -₹${discount}<br><b>Payable by COD: ₹${sub-discount}</b>`;}
-document.getElementById('qty').addEventListener('input',updateTotal);document.getElementById('couponInput').addEventListener('input',updateTotal);
+function updateTotal(){let q=Math.max(1,Math.min(10,parseInt(document.getElementById('qty').value)||1));document.getElementById('qty').value=q;let sub=currentPrice*q;let discount=0;document.getElementById('priceSummary').innerHTML=`Subtotal: ₹${sub}<br>Coupon discount: -₹${discount}<br><b>Payable by COD: ₹${sub-discount}</b>`;}
+document.getElementById('qty').addEventListener('input',updateTotal);
 document.getElementById('orderForm').addEventListener('submit',function(e){e.preventDefault();let q=Number(document.getElementById('qty').value);if(q<1||q>10){alert('Quantity 1 se 10 ke beech honi chahiye.');return;}let mobile=document.getElementById('mobile').value.trim();if(!/^[6-9]\d{9}$/.test(mobile)){alert('Please enter a valid 10-digit mobile number.');return;}let pin=document.getElementById('pin').value.trim();if(!/^\d{6}$/.test(pin)){alert('Please enter a valid 6-digit PIN code.');return;}
-let subtotal=currentPrice*q,coupon=document.getElementById('couponInput').value.trim().toUpperCase()==='RIYA',discount=coupon?Math.round(subtotal*.2):0,total=subtotal-discount;let id='SE'+Date.now().toString().slice(-8);
-let msg=`NEW SHOP EASE ORDER%0AOrder ID: ${id}%0AProduct: ${encodeURIComponent(document.getElementById('product').value)}%0AQuantity: ${q}%0ASubtotal: ₹${subtotal}%0ACoupon: ${coupon?'RIYA (20% off)':'None'}%0ADiscount: ₹${discount}%0ATotal COD: ₹${total}%0AName: ${encodeURIComponent(document.getElementById('customerName').value)}%0AMobile: ${mobile}%0AAddress: ${encodeURIComponent(document.getElementById('address').value)}%0ACity: ${encodeURIComponent(document.getElementById('city').value)}%0AState: ${encodeURIComponent(document.getElementById('state').value)}%0APIN: ${pin}%0ALandmark: ${encodeURIComponent(document.getElementById('landmark').value)}%0APayment: Cash on Delivery`;
+let subtotal=currentPrice*q,discount=0,total=subtotal;let id='SE'+Date.now().toString().slice(-8);
+let msg=`NEW SHOP EASE ORDER%0AOrder ID: ${id}%0AProduct: ${encodeURIComponent(document.getElementById('product').value)}%0AQuantity: ${q}%0ASubtotal: ₹${subtotal}%0ADiscount: 30% OFF from MRP ₹220%0ADiscount: ₹${discount}%0ATotal COD: ₹${total}%0AName: ${encodeURIComponent(document.getElementById('customerName').value)}%0AMobile: ${mobile}%0AAddress: ${encodeURIComponent(document.getElementById('address').value)}%0ACity: ${encodeURIComponent(document.getElementById('city').value)}%0AState: ${encodeURIComponent(document.getElementById('state').value)}%0APIN: ${pin}%0ALandmark: ${encodeURIComponent(document.getElementById('landmark').value)}%0APayment: Cash on Delivery`;
 closeOrder();document.getElementById('orderId').textContent='Your Order ID: '+id;document.getElementById('successModal').style.display='flex';window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');});
-function closeCoupon(){document.getElementById('couponModal').style.display='none';}
+
 document.getElementById('year').textContent=new Date().getFullYear();
-setTimeout(()=>{document.getElementById('couponModal').style.display='flex';},7000);
-setInterval(()=>{if(document.getElementById('orderModal').style.display!=='flex')document.getElementById('couponModal').style.display='flex';},45000);
+
+
 </script>
 </body></html>
