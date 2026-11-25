@@ -41,7 +41,7 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 </style>
 </head>
 <body>
-<header><div class="nav"><div class="logo">SHOP<span>EASE</span> ✦</div><nav><a href="#products">Products</a><a href="#offer">Offers</a><a href="#contact">Contact</a></nav></div></header>
+<header><div class="nav"><div class="logo">SHOP<span>EASE</span> ✦</div><nav><a href="#products">Products</a><a href="#offer">Offers</a><a href="#tracking">Track Order</a><a href="#contact">Contact</a></nav></div></header>
 
 <div class="hero"><img src="assets/riya-melody-campaign-banner.png" alt="Riya Melody perfume campaign with Cash on Delivery offer"></div>
 <div class="strip">
@@ -62,6 +62,21 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 </section>
 
 <section id="offer"><div class="offer"><div class="eyebrow">A little gift for your first order</div><h2>Enjoy 20% OFF</h2><p>Shop selected Riya Melody fragrances at 30% OFF.</p><div class="coupon">RIYA</div><p class="small">MRP ₹315 · Offer price ₹220 after approximately 30% discount. Confirm the genuine MRP before publishing.</p><button class="btn" onclick="openOrder('Riya Melody – Raspberry Candy',220)">Claim Offer</button></div></section>
+
+
+<section id="tracking">
+ <div class="eyebrow">Stay updated</div><h2>Track Your Order</h2>
+ <p class="intro">Enter your Order ID and the mobile number used while ordering to check the latest status and estimated delivery.</p>
+ <div class="offer" style="max-width:560px;margin:auto;text-align:left">
+  <form id="trackForm">
+   <label for="trackOrderId">Order ID</label><input id="trackOrderId" required placeholder="Example: SE12345678" autocomplete="off">
+   <label for="trackMobile">Registered Mobile Number</label><input id="trackMobile" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number">
+   <button class="btn" style="width:100%;margin-top:16px" type="submit">Track My Order</button>
+  </form>
+  <p id="trackMessage" class="small" style="margin:14px 0 0"></p>
+  <div id="trackResult" style="display:none;background:#fff7fa;color:#24101c;border-radius:12px;padding:16px;margin-top:14px;line-height:1.7"></div>
+ </div>
+</section>
 
 <section id="contact"><div class="eyebrow">We're here to help</div><h2>ShopEase</h2><p class="intro">For product questions or order assistance, contact us on WhatsApp: <b>+91 97736 08505</b>.</p><div style="text-align:center"><a class="btn" href="https://wa.me/919773608505" target="_blank" rel="noopener">Chat on WhatsApp</a></div></section>
 <footer>© <span id="year"></span> ShopEase. All rights reserved.<br>Orders are submitted securely to ShopEase. Cash on Delivery.</footer>
@@ -149,6 +164,33 @@ document.getElementById('orderForm').addEventListener('submit',async function(e)
  closeOrder();document.getElementById('successModal').style.display='flex';
  document.querySelector('#successModal .small').textContent='Aapka order ShopEase ko mil gaya hai. Payment delivery ke samay Cash on Delivery se karein.';
  this.reset();document.getElementById('qty').value='1';updateTotal();
+});
+
+
+const trackLabels={Pending:'Order received',Confirmed:'Order confirmed',Shipped:'Shipped',Delivered:'Delivered',Cancelled:'Cancelled'};
+function dateText(d){return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});}
+document.getElementById('trackForm').addEventListener('submit',async function(e){
+ e.preventDefault();
+ const orderNo=document.getElementById('trackOrderId').value.trim();
+ const mobile=document.getElementById('trackMobile').value.trim();
+ const msg=document.getElementById('trackMessage'), box=document.getElementById('trackResult');
+ box.style.display='none'; msg.textContent='Checking your order...';
+ if(!/^[6-9]\d{9}$/.test(mobile)){msg.textContent='Please enter the same valid 10-digit mobile number used for the order.';return;}
+ const {data,error}=await supabaseClient.rpc('track_shop_order',{p_order_number:orderNo,p_mobile:mobile});
+ if(error){console.error(error);msg.textContent='Tracking is temporarily unavailable. Please try again later.';return;}
+ const order=Array.isArray(data)?data[0]:data;
+ if(!order){msg.textContent='Order nahi mila. Order ID aur registered mobile number check karein.';return;}
+ msg.textContent='';
+ const status=order.status||'Pending';
+ let delivery='Delivery estimate will be available after your order is confirmed.';
+ const base=order.confirmed_at||((['Confirmed','Shipped','Delivered'].includes(status))?order.created_at:null);
+ if(base && status!=='Cancelled'){
+  const start=new Date(base),end=new Date(base);start.setDate(start.getDate()+3);end.setDate(end.getDate()+5);
+  delivery=`Estimated delivery: ${dateText(start)} – ${dateText(end)} (3–5 days after confirmation).`;
+ }
+ const color=status==='Delivered'?'#18794e':status==='Cancelled'?'#b42318':'#9b1248';
+ box.innerHTML=`<div style="font-size:12px;color:#6c5964">ORDER ${String(order.order_number).replace(/[&<>"']/g,'')}</div><h3 style="margin:4px 0;color:${color}">${trackLabels[status]||status}</h3><p><b>Product:</b> ${String(order.product_name||'').replace(/[&<>"']/g,'')}<br><b>Quantity:</b> ${Number(order.quantity)||1}<br><b>COD amount:</b> ₹${Number(order.total_amount||0).toLocaleString('en-IN')}</p><p style="background:#f5e7ed;padding:12px;border-radius:9px;margin-bottom:0">📦 ${delivery}</p>`;
+ box.style.display='block';
 });
 
 document.getElementById('year').textContent=new Date().getFullYear();
