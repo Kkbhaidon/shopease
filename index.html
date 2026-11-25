@@ -46,7 +46,7 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <div class="hero"><img src="assets/riya-melody-campaign-banner.png" alt="Riya Melody perfume campaign with Cash on Delivery offer"></div>
 <div class="strip">
  <div>🚚 <b>Cash on Delivery</b><br><span class="muted">Pay when your order arrives</span></div>
- <div>💗 <b>Easy Ordering</b><br><span class="muted">Order confirmation on WhatsApp</span></div>
+ <div>💗 <b>Easy Ordering</b><br><span class="muted">Order saved securely</span></div>
  <div>📦 <b>Estimated Delivery</b><br><span class="muted">Usually 3–5 days (as applicable)</span></div>
 </div>
 
@@ -64,7 +64,7 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <section id="offer"><div class="offer"><div class="eyebrow">A little gift for your first order</div><h2>Enjoy 20% OFF</h2><p>Shop selected Riya Melody fragrances at 30% OFF.</p><div class="coupon">RIYA</div><p class="small">MRP ₹315 · Offer price ₹220 after approximately 30% discount. Confirm the genuine MRP before publishing.</p><button class="btn" onclick="openOrder('Riya Melody – Raspberry Candy',220)">Claim Offer</button></div></section>
 
 <section id="contact"><div class="eyebrow">We're here to help</div><h2>ShopEase</h2><p class="intro">For product questions or order assistance, contact us on WhatsApp: <b>+91 97736 08505</b>.</p><div style="text-align:center"><a class="btn" href="https://wa.me/919773608505" target="_blank" rel="noopener">Chat on WhatsApp</a></div></section>
-<footer>© <span id="year"></span> ShopEase. All rights reserved.<br>Orders are placed after you review the details and tap Send in WhatsApp.</footer>
+<footer>© <span id="year"></span> ShopEase. All rights reserved.<br>Orders are submitted securely to ShopEase. Cash on Delivery.</footer>
 
 <div class="modal" id="orderModal"><div class="box">
 <button class="close" onclick="closeOrder()" aria-label="Close">×</button>
@@ -79,14 +79,18 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <div class="row"><div><label>City</label><input id="city" required></div><div><label>State</label><input id="state" required></div></div>
 <div class="row"><div><label>PIN Code</label><input id="pin" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6"></div><div><label>Payment</label><select id="payment"><option>Cash on Delivery</option></select></div></div>
 <label>Landmark (optional)</label><input id="landmark" placeholder="Nearby landmark">
-<p class="small">By continuing, WhatsApp will open with your order details filled in. You must tap <b>Send</b> in WhatsApp to submit the order.</p>
-<button class="btn" style="width:100%;margin-top:10px" type="submit">Confirm Order on WhatsApp</button>
+<p class="small">Your order details will be submitted securely to ShopEase. Payment is Cash on Delivery.</p>
+<button class="btn" style="width:100%;margin-top:10px" type="submit">Place COD Order</button>
 </form></div></div>
 
-<div class="modal" id="successModal"><div class="box"><button class="close" onclick="document.getElementById('successModal').style.display='none'">×</button><h2>Order Request Prepared Successfully! 💗</h2><p id="orderId"></p><p class="small">Your order details are ready. WhatsApp will open with all details. Please tap <b>Send</b> there so the order reaches ShopEase.</p><button class="btn" onclick="document.getElementById('successModal').style.display='none'">Okay</button></div></div>
+<div class="modal" id="successModal"><div class="box"><button class="close" onclick="document.getElementById('successModal').style.display='none'">×</button><h2>Order Placed Successfully! 💗</h2><p id="orderId"></p><p class="small">Your order has been received by ShopEase. Please keep your Order ID for reference.</p><button class="btn" onclick="document.getElementById('successModal').style.display='none'">Okay</button></div></div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL="https://tnkodckrxqgmhxnhiqjt.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_ZGlNpZGEXIc2EOdYKwoFUA_GzQA0euf";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const WA_NUMBER='919773608505';
 let currentPrice=220;
 
@@ -122,43 +126,31 @@ function updateTotal(){
 document.getElementById('qty').addEventListener('change',updateTotal);
 document.getElementById('couponInput').addEventListener('input',updateTotal);
 
-document.getElementById('orderForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  const t=getOrderTotals();
-  if(t.q<1||t.q>10){alert('Quantity 1 se 10 ke beech honi chahiye.');return;}
-  if(t.code && !t.validCoupon){alert('Invalid coupon code. Please enter RIYA.');return;}
-  const mobile=document.getElementById('mobile').value.trim();
-  if(!/^[6-9]\d{9}$/.test(mobile)){alert('Please enter a valid 10-digit mobile number.');return;}
-  const pin=document.getElementById('pin').value.trim();
-  if(!/^\d{6}$/.test(pin)){alert('Please enter a valid 6-digit PIN code.');return;}
 
-  const id='SE'+Date.now().toString().slice(-8);
-  const details=[
-    'NEW SHOPEASE ORDER',
-    'Order ID: '+id,
-    'Product: '+document.getElementById('product').value,
-    'Quantity: '+t.q,
-    'Offer price per item: Rs. '+currentPrice,
-    'Coupon: '+(t.validCoupon?'RIYA (20% extra discount)':'Not applied'),
-    'Subtotal: Rs. '+t.subtotal,
-    'Coupon discount: Rs. '+t.discount,
-    'Total COD: Rs. '+t.total,
-    'Name: '+document.getElementById('customerName').value,
-    'Mobile: '+mobile,
-    'Address: '+document.getElementById('address').value,
-    'City: '+document.getElementById('city').value,
-    'State: '+document.getElementById('state').value,
-    'PIN: '+pin,
-    'Landmark: '+document.getElementById('landmark').value,
-    'Payment: Cash on Delivery'
-  ].join('\n');
-
-  document.getElementById('orderId').textContent='Your Order ID: '+id;
-  closeOrder();
-  document.getElementById('successModal').style.display='flex';
-  const waUrl='https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(details);
-  window.open(waUrl,'_blank');
+document.getElementById('orderForm').addEventListener('submit',async function(e){
+ e.preventDefault(); const t=getOrderTotals();
+ if(t.q<1||t.q>10){alert('Quantity 1 se 10 ke beech honi chahiye.');return;}
+ if(t.code&&!t.validCoupon){alert('Invalid coupon code. Please enter RIYA.');return;}
+ const mobile=document.getElementById('mobile').value.trim(),pin=document.getElementById('pin').value.trim();
+ if(!/^[6-9]\d{9}$/.test(mobile)){alert('Please enter a valid 10-digit mobile number.');return;}
+ if(!/^\d{6}$/.test(pin)){alert('Please enter a valid 6-digit PIN code.');return;}
+ if(SUPABASE_URL.includes('PASTE_')||SUPABASE_ANON_KEY.includes('PASTE_')){alert('Supabase URL aur anon public key add karni baaki hai.');return;}
+ const id='SE'+Date.now().toString().slice(-8);
+ const order={order_number:id,customer_name:document.getElementById('customerName').value.trim(),mobile,
+ address:document.getElementById('address').value.trim(),city:document.getElementById('city').value.trim(),
+ state:document.getElementById('state').value.trim(),pincode:pin,landmark:document.getElementById('landmark').value.trim()||null,
+ product_name:document.getElementById('product').value,quantity:t.q,price_per_item:currentPrice,subtotal:t.subtotal,
+ coupon_code:t.validCoupon?'RIYA':null,discount:t.discount,total_amount:t.total,payment_method:'COD',status:'Pending'};
+ const btn=this.querySelector('button[type="submit"]'),old=btn.textContent;btn.disabled=true;btn.textContent='Submitting...';
+ const {data,error}=await supabaseClient.from('orders').insert(order).select('order_number').single();
+ btn.disabled=false;btn.textContent=old;
+ if(error){console.error(error);alert('Order save nahi hua: '+error.message);return;}
+ document.getElementById('orderId').textContent='Your Order ID: '+data.order_number;
+ closeOrder();document.getElementById('successModal').style.display='flex';
+ document.querySelector('#successModal .small').textContent='Aapka order ShopEase ko mil gaya hai. Payment delivery ke samay Cash on Delivery se karein.';
+ this.reset();document.getElementById('qty').value='1';updateTotal();
 });
+
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 </body></html>
