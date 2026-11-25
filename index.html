@@ -71,8 +71,8 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <h2>Complete Your Order</h2><p class="small">Cash on Delivery • Please enter your correct delivery details.</p>
 <form id="orderForm">
 <label>Product</label><input id="product" readonly>
-<div><label>Quantity (Max 10)</label><input id="qty" type="number" min="1" max="10" value="1" required></div>
-<div class="summary" id="priceSummary">Total: ₹220</div>
+<div class="row"><div><label>Quantity (Max 10)</label><input id="qty" type="number" min="1" max="10" value="1" required></div><div><label>Coupon Code</label><input id="couponInput" type="text" placeholder="Enter RIYA"></div></div>
+<div class="summary" id="priceSummary">Offer price: ₹220<br>Total payable by COD: ₹220</div>
 <label>Full Name</label><input id="customerName" required maxlength="70" placeholder="Your name">
 <label>Mobile Number</label><input id="mobile" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number">
 <label>Full Address</label><textarea id="address" required placeholder="House no., street, area"></textarea>
@@ -83,23 +83,82 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <button class="btn" style="width:100%;margin-top:10px" type="submit">Confirm Order on WhatsApp</button>
 </form></div></div>
 
-<div class="modal" id="successModal"><div class="box"><button class="close" onclick="document.getElementById('successModal').style.display='none'">×</button><h2>Order Details Ready! 💗</h2><p id="orderId"></p><p class="small">WhatsApp has opened with your order message. Please tap Send to complete your order request.</p><button class="btn" onclick="document.getElementById('successModal').style.display='none'">Okay</button></div></div>
+<div class="modal" id="successModal"><div class="box"><button class="close" onclick="document.getElementById('successModal').style.display='none'">×</button><h2>Order Request Prepared Successfully! 💗</h2><p id="orderId"></p><p class="small">Your order details are ready. WhatsApp will open with all details. Please tap <b>Send</b> there so the order reaches ShopEase.</p><button class="btn" onclick="document.getElementById('successModal').style.display='none'">Okay</button></div></div>
 
 
 <script>
 const WA_NUMBER='919773608505';
 let currentPrice=220;
-function openOrder(name,price){document.getElementById('product').value=name;currentPrice=price;document.getElementById('qty').value=1;document.getElementById('couponInput').value='';updateTotal();document.getElementById('orderModal').style.display='flex';}
+
+function openOrder(name,price){
+  document.getElementById('product').value=name;
+  currentPrice=price;
+  document.getElementById('qty').value=1;
+  document.getElementById('couponInput').value='';
+  updateTotal();
+  document.getElementById('orderModal').style.display='flex';
+}
 function closeOrder(){document.getElementById('orderModal').style.display='none'}
-function updateTotal(){let q=Math.max(1,Math.min(10,parseInt(document.getElementById('qty').value)||1));document.getElementById('qty').value=q;let sub=currentPrice*q;let discount=0;document.getElementById('priceSummary').innerHTML=`Subtotal: ₹${sub}<br>Coupon discount: -₹${discount}<br><b>Payable by COD: ₹${sub-discount}</b>`;}
+
+function getOrderTotals(){
+  const qtyInput=document.getElementById('qty');
+  let q=parseInt(qtyInput.value,10);
+  if(!Number.isFinite(q)) q=1;
+  q=Math.max(1,Math.min(10,q));
+  qtyInput.value=q;
+  const subtotal=currentPrice*q;
+  const code=document.getElementById('couponInput').value.trim().toUpperCase();
+  const validCoupon=code==='RIYA';
+  const discount=validCoupon?Math.round(subtotal*0.20):0;
+  return {q,subtotal,code,validCoupon,discount,total:subtotal-discount};
+}
+function updateTotal(){
+  const t=getOrderTotals();
+  document.getElementById('priceSummary').innerHTML=
+    `Offer price: ₹${currentPrice} × ${t.q}<br>`+
+    `Coupon: ${t.validCoupon?'RIYA applied (20% extra off)':(t.code?'Invalid code':'Not applied')}<br>`+
+    `Coupon savings: ₹${t.discount}<br><b>Total payable by COD: ₹${t.total}</b>`;
+}
 document.getElementById('qty').addEventListener('input',updateTotal);
-document.getElementById('orderForm').addEventListener('submit',function(e){e.preventDefault();let q=Number(document.getElementById('qty').value);if(q<1||q>10){alert('Quantity 1 se 10 ke beech honi chahiye.');return;}let mobile=document.getElementById('mobile').value.trim();if(!/^[6-9]\d{9}$/.test(mobile)){alert('Please enter a valid 10-digit mobile number.');return;}let pin=document.getElementById('pin').value.trim();if(!/^\d{6}$/.test(pin)){alert('Please enter a valid 6-digit PIN code.');return;}
-let subtotal=currentPrice*q,discount=0,total=subtotal;let id='SE'+Date.now().toString().slice(-8);
-let msg=`NEW SHOP EASE ORDER%0AOrder ID: ${id}%0AProduct: ${encodeURIComponent(document.getElementById('product').value)}%0AQuantity: ${q}%0ASubtotal: ₹${subtotal}%0ADiscount: 30% OFF from MRP ₹220%0ADiscount: ₹${discount}%0ATotal COD: ₹${total}%0AName: ${encodeURIComponent(document.getElementById('customerName').value)}%0AMobile: ${mobile}%0AAddress: ${encodeURIComponent(document.getElementById('address').value)}%0ACity: ${encodeURIComponent(document.getElementById('city').value)}%0AState: ${encodeURIComponent(document.getElementById('state').value)}%0APIN: ${pin}%0ALandmark: ${encodeURIComponent(document.getElementById('landmark').value)}%0APayment: Cash on Delivery`;
-closeOrder();document.getElementById('orderId').textContent='Your Order ID: '+id;document.getElementById('successModal').style.display='flex';window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');});
+document.getElementById('couponInput').addEventListener('input',updateTotal);
 
+document.getElementById('orderForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const t=getOrderTotals();
+  if(t.q<1||t.q>10){alert('Quantity 1 se 10 ke beech honi chahiye.');return;}
+  if(t.code && !t.validCoupon){alert('Invalid coupon code. Please enter RIYA.');return;}
+  const mobile=document.getElementById('mobile').value.trim();
+  if(!/^[6-9]\d{9}$/.test(mobile)){alert('Please enter a valid 10-digit mobile number.');return;}
+  const pin=document.getElementById('pin').value.trim();
+  if(!/^\d{6}$/.test(pin)){alert('Please enter a valid 6-digit PIN code.');return;}
+
+  const id='SE'+Date.now().toString().slice(-8);
+  const details=[
+    'NEW SHOPEASE ORDER',
+    'Order ID: '+id,
+    'Product: '+document.getElementById('product').value,
+    'Quantity: '+t.q,
+    'Offer price per item: Rs. '+currentPrice,
+    'Coupon: '+(t.validCoupon?'RIYA (20% extra discount)':'Not applied'),
+    'Subtotal: Rs. '+t.subtotal,
+    'Coupon discount: Rs. '+t.discount,
+    'Total COD: Rs. '+t.total,
+    'Name: '+document.getElementById('customerName').value,
+    'Mobile: '+mobile,
+    'Address: '+document.getElementById('address').value,
+    'City: '+document.getElementById('city').value,
+    'State: '+document.getElementById('state').value,
+    'PIN: '+pin,
+    'Landmark: '+document.getElementById('landmark').value,
+    'Payment: Cash on Delivery'
+  ].join('\n');
+
+  document.getElementById('orderId').textContent='Your Order ID: '+id;
+  closeOrder();
+  document.getElementById('successModal').style.display='flex';
+  const waUrl='https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(details);
+  window.open(waUrl,'_blank');
+});
 document.getElementById('year').textContent=new Date().getFullYear();
-
-
 </script>
 </body></html>
