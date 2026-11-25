@@ -101,6 +101,43 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <div class="modal" id="successModal"><div class="box"><button class="close" onclick="document.getElementById('successModal').style.display='none'">×</button><h2>Order Placed Successfully! 💗</h2><p id="orderId"></p><p class="small">Your order has been received by ShopEase. Please keep your Order ID for reference.</p><button class="btn" onclick="document.getElementById('successModal').style.display='none'">Okay</button></div></div>
 
 
+<!-- Timed promotional popups -->
+<div class="modal" id="promoPopup1" role="dialog" aria-modal="true" aria-labelledby="promoTitle1">
+ <div class="box" style="text-align:center">
+  <button class="close" onclick="closePromo(1)" aria-label="Close">×</button>
+  <div class="eyebrow">Limited-time sale</div>
+  <img src="assets/riya-melody-30ml-premium.png" alt="Riya Melody 30ml perfume" style="width:100%;max-height:190px;object-fit:contain;border-radius:12px">
+  <h2 id="promoTitle1">Riya Melody 30ml</h2>
+  <p style="margin:8px 0">A beautiful everyday fragrance at a special price.</p>
+  <div class="price" style="color:#9b1248">₹220 <span class="old">₹315</span></div>
+  <p class="small">Limited-time offer · Cash on Delivery</p>
+  <button class="btn" onclick="buyPromo(1,'Riya Melody Eau de Parfum – 30ml',220,false)">Buy Now</button>
+ </div>
+</div>
+<div class="modal" id="promoPopup2" role="dialog" aria-modal="true" aria-labelledby="promoTitle2">
+ <div class="box" style="text-align:center">
+  <button class="close" onclick="closePromo(2)" aria-label="Close">×</button>
+  <div class="eyebrow">A special gift for you</div>
+  <h2 id="promoTitle2">Get Extra 20% OFF 💗</h2>
+  <p>Use this coupon at checkout and save more on your perfume.</p>
+  <div class="coupon" style="color:#9b1248;border-color:#9b1248;font-size:24px">RIYA</div>
+  <p class="small">Enter code RIYA at checkout to get 20% extra discount on the order subtotal.</p>
+  <button class="btn" onclick="buyPromo(2,'Riya Melody Eau de Parfum – 30ml',220,true)">Apply Coupon & Buy</button>
+ </div>
+</div>
+<div class="modal" id="promoPopup3" role="dialog" aria-modal="true" aria-labelledby="promoTitle3">
+ <div class="box" style="text-align:center">
+  <button class="close" onclick="closePromo(3)" aria-label="Close">×</button>
+  <div class="eyebrow">Discover another fragrance</div>
+  <img src="assets/riya-melody-50ml-blue.png" alt="Riya Melody 50ml blue perfume" style="width:100%;max-height:190px;object-fit:contain;border-radius:12px">
+  <h2 id="promoTitle3">Riya Melody 50ml</h2>
+  <p>A fresh, refined fragrance. Make it yours today.</p>
+  <div class="price" style="color:#9b1248">₹220 <span class="old">₹315</span></div>
+  <button class="btn" onclick="buyPromo(3,'Riya Melody Eau de Parfum – 50ml Blue',220,false)">Buy Now</button>
+ </div>
+</div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL="https://tnkodckrxqgmhxnhiqjt.supabase.co";
@@ -109,15 +146,36 @@ const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY
 const WA_NUMBER='919773608505';
 let currentPrice=220;
 
-function openOrder(name,price){
+function openOrder(name,price,applyCoupon=false){
   document.getElementById('product').value=name;
   currentPrice=price;
   document.getElementById('qty').value=1;
-  document.getElementById('couponInput').value='';
+  document.getElementById('couponInput').value=applyCoupon?'RIYA':'';
   updateTotal();
   document.getElementById('orderModal').style.display='flex';
 }
 function closeOrder(){document.getElementById('orderModal').style.display='none'}
+
+let promoTimers=[];
+function closePromo(n){document.getElementById('promoPopup'+n).style.display='none';}
+function buyPromo(n,name,price,applyCoupon){
+  closePromo(n);
+  promoTimers.forEach(clearTimeout);promoTimers=[];
+  openOrder(name,price,applyCoupon);
+}
+function startPromoSequence(){
+  // First offer appears as soon as the page opens.
+  document.getElementById('promoPopup1').style.display='flex';
+  promoTimers.push(setTimeout(()=>{
+    if(!document.getElementById('orderModal').style.display || document.getElementById('orderModal').style.display!=='flex'){
+      closePromo(1);document.getElementById('promoPopup2').style.display='flex';
+    }
+  },20000));
+  promoTimers.push(setTimeout(()=>{
+    if(document.getElementById('promoPopup2').style.display==='flex') closePromo(2);
+    if(document.getElementById('orderModal').style.display!=='flex') document.getElementById('promoPopup3').style.display='flex';
+  },40000));
+}
 
 function getOrderTotals(){
   const qtyInput=document.getElementById('qty');
@@ -160,12 +218,21 @@ document.getElementById('orderForm').addEventListener('submit',async function(e)
  const {data,error}=await supabaseClient.from('orders').insert(order).select('order_number').single();
  btn.disabled=false;btn.textContent=old;
  if(error){console.error(error);alert('Order save nahi hua: '+error.message);return;}
+ const placedMobile=mobile;
  document.getElementById('orderId').textContent='Your Order ID: '+data.order_number;
- closeOrder();document.getElementById('successModal').style.display='flex';
- document.querySelector('#successModal .small').textContent='Aapka order ShopEase ko mil gaya hai. Payment delivery ke samay Cash on Delivery se karein.';
+ closeOrder();
  this.reset();document.getElementById('qty').value='1';updateTotal();
+ // After a successful order, open tracking with the order details already filled in.
+ document.getElementById('trackOrderId').value=data.order_number;
+ document.getElementById('trackMobile').value=placedMobile;
+ goToTracking();
 });
 
+function goToTracking(){
+ document.getElementById('successModal').style.display='none';
+ document.getElementById('tracking').scrollIntoView({behavior:'smooth',block:'start'});
+ setTimeout(()=>document.getElementById('trackForm').requestSubmit(),500);
+}
 
 const trackLabels={Pending:'Order received',Confirmed:'Order confirmed',Shipped:'Shipped',Delivered:'Delivered',Cancelled:'Cancelled'};
 function dateText(d){return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});}
@@ -189,10 +256,19 @@ document.getElementById('trackForm').addEventListener('submit',async function(e)
   delivery=`Estimated delivery: ${dateText(start)} – ${dateText(end)} (3–5 days after confirmation).`;
  }
  const color=status==='Delivered'?'#18794e':status==='Cancelled'?'#b42318':'#9b1248';
- box.innerHTML=`<div style="font-size:12px;color:#6c5964">ORDER ${String(order.order_number).replace(/[&<>"']/g,'')}</div><h3 style="margin:4px 0;color:${color}">${trackLabels[status]||status}</h3><p><b>Product:</b> ${String(order.product_name||'').replace(/[&<>"']/g,'')}<br><b>Quantity:</b> ${Number(order.quantity)||1}<br><b>COD amount:</b> ₹${Number(order.total_amount||0).toLocaleString('en-IN')}</p><p style="background:#f5e7ed;padding:12px;border-radius:9px;margin-bottom:0">📦 ${delivery}</p>`;
+ box.innerHTML=`<div style="font-size:12px;color:#6c5964">ORDER ${String(order.order_number).replace(/[&<>"']/g,'')}</div><h3 style="margin:4px 0;color:${color}">${trackLabels[status]||status}</h3><p><b>Product:</b> ${String(order.product_name||'').replace(/[&<>"']/g,'')}<br><b>Quantity:</b> ${Number(order.quantity)||1}<br><b>COD amount:</b> ₹${Number(order.total_amount||0).toLocaleString('en-IN')}</p><p style="background:#f5e7ed;padding:12px;border-radius:9px;margin-bottom:0">📦 ${delivery}</p><p style="font-size:11px;color:#6c5964;margin:10px 0 0">Status auto-refreshes every 15 seconds while this page stays open.</p>`;
  box.style.display='block';
 });
 
+// If the customer keeps tracking open, show admin status changes automatically.
+setInterval(()=>{
+ const box=document.getElementById('trackResult');
+ if(box.style.display==='block' && document.visibilityState==='visible'){
+  document.getElementById('trackForm').requestSubmit();
+ }
+},15000);
+
 document.getElementById('year').textContent=new Date().getFullYear();
+startPromoSequence();
 </script>
 </body></html>
