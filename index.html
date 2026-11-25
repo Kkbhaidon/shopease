@@ -71,7 +71,7 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <h2>Complete Your Order</h2><p class="small">Cash on Delivery • Please enter your correct delivery details.</p>
 <form id="orderForm">
 <label>Product</label><input id="product" readonly>
-<div class="row"><div><label>Quantity (Max 10)</label><input id="qty" type="number" min="1" max="10" value="1" required></div><div><label>Coupon Code</label><input id="couponInput" type="text" placeholder="Enter RIYA"></div></div>
+<div class="row"><div><label for="qty">Quantity (Max 10)</label><select id="qty" required><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></div><div><label for="couponInput">Coupon Code</label><input id="couponInput" type="text" placeholder="Enter RIYA"></div></div>
 <div class="summary" id="priceSummary">Offer price: ₹220<br>Total payable by COD: ₹220</div>
 <label>Full Name</label><input id="customerName" required maxlength="70" placeholder="Your name">
 <label>Mobile Number</label><input id="mobile" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number">
@@ -119,7 +119,7 @@ function updateTotal(){
     `Coupon: ${t.validCoupon?'RIYA applied (20% extra off)':(t.code?'Invalid code':'Not applied')}<br>`+
     `Coupon savings: ₹${t.discount}<br><b>Total payable by COD: ₹${t.total}</b>`;
 }
-document.getElementById('qty').addEventListener('input',updateTotal);
+document.getElementById('qty').addEventListener('change',updateTotal);
 document.getElementById('couponInput').addEventListener('input',updateTotal);
 
 document.getElementById('orderForm').addEventListener('submit',function(e){
