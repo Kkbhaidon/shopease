@@ -269,8 +269,20 @@ document.getElementById('qty').addEventListener('change',updateTotal);
 document.getElementById('couponInput').addEventListener('input',updateTotal);
 function closeFirstOrderPopup(){hideShopModal('firstOrderPopup');}
 function claimFirstOffer(){closeFirstOrderPopup();document.getElementById('products').scrollIntoView({behavior:'smooth'});}
-// Show the same first-order offer three times: 15s, 30s and 60s after page load.
-window.addEventListener('load',()=>{[15000,30000,60000].forEach(delay=>setTimeout(()=>{const popup=document.getElementById('firstOrderPopup');const order=document.getElementById('orderModal');if(popup && popup.style.display!=='flex' && (!order || order.style.display!=='flex'))showShopModal('firstOrderPopup');},delay));});
+// Show the same FIRST10 offer at 15s and 60s, only once per visitor for each slot.
+window.addEventListener('load',()=>{
+  [{delay:15000,key:'shopease_first10_popup_15_shown'},{delay:60000,key:'shopease_first10_popup_60_shown'}].forEach(({delay,key})=>{
+    setTimeout(()=>{
+      const popup=document.getElementById('firstOrderPopup');
+      const order=document.getElementById('orderModal');
+      let alreadyShown=false;
+      try{alreadyShown=localStorage.getItem(key)==='1';}catch(e){}
+      if(!popup || alreadyShown || popup.classList.contains('is-open') || (order && order.style.display==='flex'))return;
+      showShopModal('firstOrderPopup');
+      try{localStorage.setItem(key,'1');}catch(e){}
+    },delay);
+  });
+});
 
 
 
