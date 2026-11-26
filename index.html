@@ -17,13 +17,13 @@ nav a{color:#fff;text-decoration:none;margin-left:16px;font-size:14px}
 .hero{max-width:1120px;margin:22px auto 0;padding:0 16px}.hero img{width:100%;height:auto;display:block;border-radius:18px;box-shadow:0 18px 55px #0009}
 .strip{max-width:1120px;margin:16px auto;padding:0 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .strip div{background:#21131e;border:1px solid #d9ad5544;border-radius:12px;text-align:center;padding:15px 8px;font-size:14px}
-section{max-width:1120px;margin:55px auto;padding:0 18px}.eyebrow{color:#e9c77d;letter-spacing:3px;font-size:12px;text-transform:uppercase;text-align:center}
-h1,h2{text-align:center;margin:10px 0 18px}h2{font-size:30px}.intro{text-align:center;color:#d9cbd3;max-width:680px;margin:0 auto 26px;line-height:1.6}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+section{max-width:1120px;margin:18px auto;padding:0 12px}.eyebrow{color:#e9c77d;letter-spacing:3px;font-size:12px;text-transform:uppercase;text-align:center}
+h1,h2{text-align:center;margin:10px 0 18px}h2{font-size:30px}.intro{text-align:center;color:#d9cbd3;max-width:680px;margin:0 auto 14px;line-height:1.45}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card{background:#21151f;border:1px solid #ffffff18;border-radius:17px;overflow:hidden}
-.card .visual{height:260px;background:linear-gradient(135deg,#4a1730,#170d16);display:flex;align-items:center;justify-content:center;overflow:hidden}.card .visual img{width:100%;height:100%;object-fit:contain;padding:8px;display:block}.discount{display:inline-block;background:#a90c4c;color:#fff;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:800;margin-left:6px}
-.card .body{padding:17px}.card h3{margin:0 0 8px}.muted{color:#c8b9c2;font-size:13px;line-height:1.5}
-.price{font-size:22px;font-weight:900;color:#ffe2a0;margin:12px 0}.old{font-size:14px;color:#a99aa3;text-decoration:line-through;margin-left:7px}
+.card .visual{height:180px;background:linear-gradient(135deg,#4a1730,#170d16);display:flex;align-items:center;justify-content:center;overflow:hidden}.card .visual img{width:100%;height:100%;object-fit:contain;padding:8px;display:block}.chocolate-card{grid-column:1/-1}.chocolate-gallery{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;background:#170d16}.chocolate-gallery img{flex:0 0 100%;width:100%;height:280px;object-fit:contain;scroll-snap-align:start;padding:8px}.gallery-hint{text-align:center;color:#c8b9c2;font-size:11px;padding:5px 0 0}.discount{display:inline-block;background:#a90c4c;color:#fff;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:800;margin-left:6px}
+.card .body{padding:11px}.card h3{margin:0 0 6px;font-size:15px;line-height:1.25}.muted{color:#c8b9c2;font-size:13px;line-height:1.5}
+.price{font-size:18px;font-weight:900;color:#ffe2a0;margin:12px 0}.old{font-size:14px;color:#a99aa3;text-decoration:line-through;margin-left:7px}
 .tag{display:inline-block;background:#562039;color:#ffd8e7;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700}
 .poster{width:100%;height:auto;border-radius:16px;display:block;margin:20px auto 0}
 .offer{background:linear-gradient(120deg,#5c1235,#260f20);border:1px solid #d9ad5570;border-radius:18px;padding:28px;text-align:center}
@@ -37,18 +37,23 @@ input,textarea,select{width:100%;padding:12px;border:1px solid #ddcbd4;border-ra
 textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .summary{background:#f5e7ed;padding:12px;border-radius:10px;margin:12px 0;font-size:14px}
 .small{font-size:12px;color:#6c5964;line-height:1.5}
-@media(max-width:650px){nav a{margin-left:8px;font-size:12px}.nav{padding:12px}.logo{font-size:19px}.strip{grid-template-columns:1fr}.hero{margin-top:12px}h2{font-size:25px}}
+@media(max-width:650px){nav a{margin-left:7px;font-size:11px}.nav{padding:10px 12px}.logo{font-size:18px}h2{font-size:21px;margin:6px 0 10px}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card .visual{height:135px}.chocolate-gallery img{height:210px}.card .visual img{padding:5px}.card .body{padding:9px}.card h3{font-size:13px}.muted{font-size:11px;line-height:1.35}.price{font-size:16px;margin:8px 0}.old{font-size:11px}.discount{font-size:10px;padding:4px 6px;margin-left:2px}.btn{padding:9px 12px;font-size:12px;width:100%}.tag{font-size:9px;padding:4px 6px}section{margin:12px auto;padding:0 9px}.poster{margin-top:14px}}
 </style>
 </head>
 <body>
 <header><div class="nav"><div class="logo">SHOP<span>EASE</span> ✦</div><nav><a href="#products">Products</a><a href="#offer">Offers</a><a href="#tracking">Track Order</a><a href="#contact">Contact</a></nav></div></header>
 
-<div class="hero"><img src="assets/riya-melody-campaign-banner.png" alt="Riya Melody perfume campaign with Cash on Delivery offer"></div>
 
 <section id="products">
  <div class="eyebrow">Find your signature scent</div><h2>Shop Our Fragrance</h2>
  <p class="intro">A little fragrance can make an ordinary day feel special. Explore Riya Melody and place your order with Cash on Delivery.</p>
  <div class="products">
+  <article class="card chocolate-card"><div class="chocolate-gallery" aria-label="Wildplay Chocolate perfume photo gallery">
+   <img src="assets/wildplay-chocolate-main.jpg" alt="Wildplay Chocolate 30ml perfume and box">
+   <img src="assets/wildplay-chocolate-hand.jpg" alt="Wildplay Chocolate perfume bottle in hand">
+   <img src="assets/wildplay-chocolate-notes.jpg" alt="Wildplay Chocolate fragrance notes">
+   <img src="assets/wildplay-chocolate-model.jpg" alt="Wildplay Chocolate perfume lifestyle photo">
+  </div><div class="gallery-hint">← Swipe to see all 4 photos →</div><div class="body"><span class="tag">WILDPLAY · 30ml</span><h3>Wildplay Chocolate Apparel Perfume</h3><div class="price">₹190 <span class="old">₹271</span> <span class="discount">30% OFF</span></div><p class="muted">MRP ₹271 · You save ₹81</p><button class="btn" onclick="openOrder('Wildplay Chocolate Apparel Perfume – 30ml',190)">Buy Now</button></div></article>
   <article class="card"><div class="visual"><img src="assets/millennium-stud-5000.png" alt="Millennium Stud 5000 product"></div><div class="body"><h3>Millennium Stud 5000</h3><div class="price">₹180 <span class="old">₹257</span> <span class="discount">30% OFF</span></div><button class="btn" onclick="openOrder('Millennium Stud 5000 – 20g',180)">Buy Now</button></div></article>
   <article class="card"><div class="visual"><img src="assets/riya-melody-30ml-premium.png" alt="Riya Melody 30ml perfume"></div><div class="body"><span class="tag">RIYA MELODY · 30ml</span><h3>Riya Melody Eau de Parfum</h3><p class="muted">An elegant everyday fragrance in a compact 30ml bottle.</p><div class="price">₹220 <span class="old">₹315</span> <span class="discount">30% OFF</span></div><p class="muted">MRP ₹315 · You save ₹95</p><button class="btn" onclick="openOrder('Riya Melody Eau de Parfum – 30ml',220)">Order Now</button></div></article>
   <article class="card"><div class="visual"><img src="assets/riya-melody-50ml-blue.png" alt="Riya Melody 50ml perfume blue cap"></div><div class="body"><span class="tag">RIYA MELODY · 50ml</span><h3>Riya Melody Eau de Parfum</h3><p class="muted">A fresh, refined fragrance in a 50ml bottle.</p><div class="price">₹220 <span class="old">₹315</span> <span class="discount">30% OFF</span></div><p class="muted">MRP ₹315 · You save ₹95</p><button class="btn" onclick="openOrder('Riya Melody Eau de Parfum – 50ml Blue',220)">Order Now</button></div></article>
