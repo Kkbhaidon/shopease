@@ -84,6 +84,24 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 .btn{transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}.btn:active{transform:scale(.97);filter:brightness(1.12)}.btn:disabled{opacity:.65;cursor:wait}
 .card{transition:transform .2s ease,box-shadow .2s ease}.card:active{transform:scale(.99)}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Featured Shiva Ji waterfall murti product */
+.shiva-featured-card{grid-column:1/-1;border:1px solid #d9ad5577;box-shadow:0 12px 34px #0007}
+.shiva-featured-card .visual{height:390px;background:linear-gradient(135deg,#f7eee1,#e8d6bd);padding:10px}
+.shiva-featured-card .visual img{object-fit:contain;padding:0;width:100%;height:100%}
+.shiva-featured-card .body{padding:16px}
+.shiva-featured-card h3{font-size:21px}
+.shiva-featured-card .muted{font-size:14px}
+.shiva-gallery-note{display:flex;align-items:center;justify-content:center;gap:7px;color:#6c4b2f;font-size:12px;font-weight:700;padding:7px 0 0}
+.shiva-free-tag{display:inline-block;background:#155e36;color:#fff;padding:6px 11px;border-radius:20px;font-size:12px;font-weight:900;margin-top:8px}
+.shiva-featured-card .price{font-size:23px}
+@media(max-width:650px){
+ .shiva-featured-card .visual{height:290px;padding:7px}
+ .shiva-featured-card .body{padding:12px}
+ .shiva-featured-card h3{font-size:17px}
+ .shiva-featured-card .price{font-size:21px}
+}
+
 </style>
 </head>
 <body>
@@ -99,6 +117,24 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
  <div class="eyebrow">Find your signature scent</div><h2>Shop Our Fragrance</h2>
  <p class="intro">A little fragrance can make an ordinary day feel special. Explore Riya Melody and place your order with Cash on Delivery.</p>
  <div class="products">
+
+  <article class="card shiva-featured-card">
+    <div class="visual" role="button" tabindex="0" aria-label="View all Shiva Ji waterfall murti photos"
+      onclick="openProductGallery(['assets/shivji-murti-main.png','assets/shivji-murti-home-view.png','assets/shivji-murti-free-dhoopbatti-view.png'],0,'Shiv Ji Waterfall Dhoopbatti Murti')"
+      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductGallery(['assets/shivji-murti-main.png','assets/shivji-murti-home-view.png','assets/shivji-murti-free-dhoopbatti-view.png'],0,'Shiv Ji Waterfall Dhoopbatti Murti')}">
+      <img src="assets/shivji-murti-main.png" alt="Shiv Ji waterfall dhoopbatti murti with flowing smoke">
+      <span class="zoom-hint">⌕ View 3 photos · Swipe to explore</span>
+    </div>
+    <div class="body">
+      <span class="tag">DEVOTIONAL HOME DECOR</span>
+      <h3>Shiv Ji Waterfall Dhoopbatti Murti</h3>
+      <p class="muted">A beautiful Lord Shiva waterfall-style incense cone holder for a peaceful, devotional corner at home.</p>
+      <div class="price">₹200</div>
+      <span class="shiva-free-tag">🎁 100 DHOOPBATTI FREE WITH THIS MURTI</span>
+      <div class="shiva-gallery-note">Tap the photo to view all 3 product images</div>
+      <button class="btn" style="width:100%;margin-top:12px" onclick="openOrder('Shiv Ji Waterfall Dhoopbatti Murti + 100 Dhoopbatti Free',200)">Buy Now · Cash on Delivery</button>
+    </div>
+  </article>
   <article class="card"><div class="visual" role="button" tabindex="0" aria-label="View Wildplay Chocolate perfume photos" onclick="openProductGallery(['assets/wildplay-chocolate-1.jpg','assets/wildplay-chocolate-2.jpg','assets/wildplay-chocolate-3.jpg','assets/wildplay-chocolate-4.jpg'],0,'Wildplay Chocolate Perfume')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductGallery(['assets/wildplay-chocolate-1.jpg','assets/wildplay-chocolate-2.jpg','assets/wildplay-chocolate-3.jpg','assets/wildplay-chocolate-4.jpg'],0,'Wildplay Chocolate Perfume')}"><img src="assets/wildplay-chocolate-1.jpg" alt="Wildplay Chocolate Perfume 30ml - product and box"><span class="zoom-hint">⌕ View photos</span></div><div class="body"><span class="tag">WILDPLAY · 30ml</span><h3>Wildplay Chocolate Perfume</h3><div class="price">₹190 <span class="old">₹271</span> <span class="discount">30% OFF</span></div><button class="btn" onclick="openOrder('Wildplay Chocolate Perfume – 30ml',190)">Buy Now</button></div></article>
   <article class="card">
     <div class="visual" role="button" tabindex="0" aria-label="View Wildplay I Am in Love perfume photos"
