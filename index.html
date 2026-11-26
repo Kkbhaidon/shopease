@@ -158,7 +158,7 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <form id="orderForm">
 <label>Product</label><input id="product" readonly>
 <label for="qty">Quantity (Max 10)</label><select id="qty" required><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
-<label for="couponInput">First Order Coupon Code</label><input id="couponInput" type="text" placeholder="Enter FIRST20" autocomplete="off" maxlength="20">
+<label for="couponInput">First Order Coupon Code</label><input id="couponInput" type="text" placeholder="Enter FIRST10" autocomplete="off" maxlength="20">
 <div class="summary" id="priceSummary">Price: ₹220 × 1<br>Coupon savings: ₹0<br><b>Total payable by COD: ₹220</b></div>
 <label>Full Name</label><input id="customerName" required maxlength="70" placeholder="Your name">
 <label>Mobile Number</label><input id="mobile" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number">
@@ -178,10 +178,10 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
   <button class="close" onclick="closeFirstOrderPopup()" aria-label="Close">×</button>
   <div style="font-size:42px">🎉</div>
   <div class="eyebrow" style="color:#9b1248">A welcome gift from ShopEase</div>
-  <h2 id="firstOfferTitle">Lucky you! Get 20% OFF</h2>
-  <p style="font-size:17px;line-height:1.5">Enjoy <b>20% OFF on your first purchase!</b></p>
+  <h2 id="firstOfferTitle">Lucky you! Get 10% OFF</h2>
+  <p style="font-size:17px;line-height:1.5">Enjoy <b>10% OFF on your first purchase!</b></p>
   <p class="small">Enter this coupon code at checkout:</p>
-  <div class="coupon" style="display:inline-block;background:#f5e7ed;color:#9b1248;border:1px dashed #9b1248;padding:12px 22px;border-radius:10px;font-size:25px;font-weight:900;letter-spacing:2px">FIRST20</div>
+  <div class="coupon" style="display:inline-block;background:#f5e7ed;color:#9b1248;border:1px dashed #9b1248;padding:12px 22px;border-radius:10px;font-size:25px;font-weight:900;letter-spacing:2px">FIRST10</div>
   <p class="small">Valid for your first order only. One use per mobile number.</p>
   <button class="btn" onclick="claimFirstOffer()" style="width:100%;margin-top:10px">Shop Now</button>
  </div>
@@ -238,21 +238,22 @@ function getOrderTotals(){
   qtyInput.value=q;
   const subtotal=currentPrice*q;
   const code=document.getElementById('couponInput').value.trim().toUpperCase();
-  const validCoupon=code==='FIRST20';
-  const discount=validCoupon?Math.round(subtotal*0.20):0;
+  const validCoupon=code==='FIRST10';
+  const discount=validCoupon?Math.round(subtotal*0.10):0;
   return {q,subtotal,code,validCoupon,discount,total:subtotal-discount};
 }
 function updateTotal(){
   const t=getOrderTotals();
-  const couponLine=t.validCoupon?'FIRST20 applied (20% OFF)':(t.code?'Invalid coupon code':'Not applied');
+  const couponLine=t.validCoupon?'FIRST10 applied (10% OFF)':(t.code?'Invalid coupon code':'Not applied');
   document.getElementById('priceSummary').innerHTML=
     `Price: ₹${currentPrice} × ${t.q}<br>Coupon: ${couponLine}<br>Coupon savings: ₹${t.discount}<br><b>Total payable by COD: ₹${t.total}</b>`;
 }
 document.getElementById('qty').addEventListener('change',updateTotal);
 document.getElementById('couponInput').addEventListener('input',updateTotal);
-function closeFirstOrderPopup(){document.getElementById('firstOrderPopup').style.display='none';sessionStorage.setItem('first20PopupClosed','1');}
+function closeFirstOrderPopup(){document.getElementById('firstOrderPopup').style.display='none';}
 function claimFirstOffer(){closeFirstOrderPopup();document.getElementById('products').scrollIntoView({behavior:'smooth'});}
-window.addEventListener('load',()=>{setTimeout(()=>{if(!sessionStorage.getItem('first20PopupClosed'))document.getElementById('firstOrderPopup').style.display='flex';},10000);});
+// Show the same first-order offer three times: 15s, 30s and 60s after page load.
+window.addEventListener('load',()=>{[15000,30000,60000].forEach(delay=>setTimeout(()=>{const popup=document.getElementById('firstOrderPopup');const order=document.getElementById('orderModal');if(popup && (!order || order.style.display!=='flex'))popup.style.display='flex';},delay));});
 
 
 
@@ -262,11 +263,11 @@ document.getElementById('orderForm').addEventListener('submit',async function(e)
  const mobile=document.getElementById('mobile').value.trim(),pin=document.getElementById('pin').value.trim();
  if(!/^[6-9]\d{9}$/.test(mobile)){alert('Please enter a valid 10-digit mobile number.');return;}
  if(!/^\d{6}$/.test(pin)){alert('Please enter a valid 6-digit PIN code.');return;}
- if(t.code && !t.validCoupon){alert('Invalid coupon. Please enter FIRST20.');return;}
+ if(t.code && !t.validCoupon){alert('Invalid coupon. Please enter FIRST10.');return;}
  if(t.validCoupon){
    const {data:eligible,error:couponError}=await supabaseClient.rpc('validate_first20_coupon',{p_mobile:mobile});
    if(couponError){console.error(couponError);alert('Coupon verify nahi ho paya. Please try again.');return;}
-   if(!eligible){alert('FIRST20 coupon sirf pehle order par valid hai. Is mobile number se pehle order ho chuka hai.');return;}
+   if(!eligible){alert('FIRST10 coupon sirf pehle order par valid hai. Is mobile number se pehle order ho chuka hai.');return;}
  }
  if(SUPABASE_URL.includes('PASTE_')||SUPABASE_ANON_KEY.includes('PASTE_')){alert('Supabase URL aur anon public key add karni baaki hai.');return;}
  const id='SE'+Date.now().toString().slice(-8);
@@ -274,7 +275,7 @@ document.getElementById('orderForm').addEventListener('submit',async function(e)
  address:document.getElementById('address').value.trim(),city:document.getElementById('city').value.trim(),
  state:document.getElementById('state').value.trim(),pincode:pin,landmark:document.getElementById('landmark').value.trim()||null,
  product_name:document.getElementById('product').value,quantity:t.q,price_per_item:currentPrice,subtotal:t.subtotal,
- coupon_code:t.validCoupon?'FIRST20':null,discount:t.discount,total_amount:t.total,payment_method:'COD',status:'Pending'};
+ coupon_code:t.validCoupon?'FIRST10':null,discount:t.discount,total_amount:t.total,payment_method:'COD',status:'Pending'};
  const btn=this.querySelector('button[type="submit"]'),old=btn.textContent;btn.disabled=true;btn.textContent='Submitting...';
  const {error}=await supabaseClient.from('orders').insert(order);
  btn.disabled=false;btn.textContent=old;
