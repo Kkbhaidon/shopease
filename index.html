@@ -29,8 +29,8 @@ h1,h2{text-align:center;margin:10px 0 18px}h2{font-size:30px}.intro{text-align:c
 .offer{background:linear-gradient(120deg,#5c1235,#260f20);border:1px solid #d9ad5570;border-radius:18px;padding:28px;text-align:center}
 .offer strong{color:#ffdc8d}
 footer{background:#160d15;margin-top:60px;padding:30px 18px;text-align:center;color:#cbbcc5;font-size:13px;line-height:1.8}
-.modal{display:none;position:fixed;inset:0;background:#0000;z-index:30;align-items:center;justify-content:center;padding:16px;opacity:0;transition:opacity .38s ease,background .38s ease}
-.box{background:#fff7fa;color:#24101c;width:min(480px,100%);border-radius:18px;padding:22px;position:relative;max-height:92vh;overflow:auto;transform:translateY(28px) scale(.97);opacity:0;transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .32s ease}
+.modal{display:none;position:fixed;inset:0;background:#0000;z-index:30;align-items:center;justify-content:center;padding:16px;opacity:0;transition:opacity .75s ease,background .75s ease}
+.box{background:#fff7fa;color:#24101c;width:min(480px,100%);border-radius:18px;padding:22px;position:relative;max-height:92vh;overflow:auto;transform:translateY(28px) scale(.97);opacity:0;transition:transform .85s cubic-bezier(.16,1,.3,1),opacity .75s ease}
 .box h2{color:#9b1248;margin-top:4px}.close{position:absolute;right:14px;top:10px;border:0;background:none;font-size:25px;cursor:pointer}
 label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}
 input,textarea,select{width:100%;padding:12px;border:1px solid #ddcbd4;border-radius:9px;font:inherit;background:white;color:#21121a}
@@ -50,6 +50,12 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 @media(max-width:650px){.gallery-main{height:68vh;width:100%}.gallery-arrow{width:36px;height:36px;font-size:21px}.gallery-prev{left:0}.gallery-next{right:0}.gallery-close{right:10px;top:10px}}
 
 
+/* ShopEase deliberate, premium-feel transitions */
+#orderModal.preparing{opacity:1;background:rgba(0,0,0,.58);backdrop-filter:blur(5px)}
+#orderModal.preparing .box{opacity:0;transform:translateY(42px) scale(.96)}
+#orderModal.preparing:before{content:"";width:34px;height:34px;border:3px solid #ffffff55;border-top-color:#f5d68e;border-radius:50%;position:absolute;left:calc(50% - 17px);top:calc(50% - 17px);animation:orderSpin .8s linear infinite}
+#orderModal.preparing:after{content:"Preparing your order form...";position:absolute;top:calc(50% + 32px);left:0;width:100%;text-align:center;color:#fff;font-size:14px;letter-spacing:.3px}
+@keyframes orderSpin{to{transform:rotate(360deg)}}
 /* ShopEase smooth loading and interaction polish */
 #siteLoader{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at 50% 35%,#482033,#100810 70%);opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
 #siteLoader.hide{opacity:0;visibility:hidden;pointer-events:none}
@@ -77,6 +83,20 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
  <p class="intro">A little fragrance can make an ordinary day feel special. Explore Riya Melody and place your order with Cash on Delivery.</p>
  <div class="products">
   <article class="card"><div class="visual" role="button" tabindex="0" aria-label="View Wildplay Chocolate perfume photos" onclick="openProductGallery(['assets/wildplay-chocolate-1.jpg','assets/wildplay-chocolate-2.jpg','assets/wildplay-chocolate-3.jpg','assets/wildplay-chocolate-4.jpg'],0,'Wildplay Chocolate Perfume')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductGallery(['assets/wildplay-chocolate-1.jpg','assets/wildplay-chocolate-2.jpg','assets/wildplay-chocolate-3.jpg','assets/wildplay-chocolate-4.jpg'],0,'Wildplay Chocolate Perfume')}"><img src="assets/wildplay-chocolate-1.jpg" alt="Wildplay Chocolate Perfume 30ml - product and box"><span class="zoom-hint">⌕ View photos</span></div><div class="body"><span class="tag">WILDPLAY · 30ml</span><h3>Wildplay Chocolate Perfume</h3><div class="price">₹190 <span class="old">₹271</span> <span class="discount">30% OFF</span></div><button class="btn" onclick="openOrder('Wildplay Chocolate Perfume – 30ml',190)">Buy Now</button></div></article>
+  <article class="card">
+    <div class="visual" role="button" tabindex="0" aria-label="View Wildplay I Am in Love perfume photos"
+      onclick="openProductGallery(['assets/wildplay-iam-in-love-1.jpg','assets/wildplay-iam-in-love-2.jpg','assets/wildplay-iam-in-love-3.jpg','assets/wildplay-iam-in-love-4.jpg'],0,'Wildplay I Am in Love Perfume')"
+      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductGallery(['assets/wildplay-iam-in-love-1.jpg','assets/wildplay-iam-in-love-2.jpg','assets/wildplay-iam-in-love-3.jpg','assets/wildplay-iam-in-love-4.jpg'],0,'Wildplay I Am in Love Perfume')}">
+      <img src="assets/wildplay-iam-in-love-1.jpg" alt="Wildplay I Am in Love 30ml perfume and box">
+      <span class="zoom-hint">⌕ View photos</span>
+    </div>
+    <div class="body">
+      <span class="tag">WILDPLAY · 30ml</span>
+      <h3>Wildplay I Am in Love Perfume</h3>
+      <div class="price">₹200 <span class="old">₹286</span> <span class="discount">30% OFF</span></div>
+      <button class="btn" onclick="openOrder('Wildplay I Am in Love Perfume – 30ml',200)">Buy Now</button>
+    </div>
+  </article>
   <article class="card"><div class="visual" role="button" tabindex="0" aria-label="Zoom Millennium Stud 5000 product" onclick="openProductGallery(['assets/millennium-stud-5000.png'],0,'Millennium Stud 5000 product')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductGallery(['assets/millennium-stud-5000.png'],0,'Millennium Stud 5000 product')}"><img src="assets/millennium-stud-5000.png" alt="Millennium Stud 5000 product"><span class="zoom-hint">⌕ Zoom</span></div><div class="body"><h3>Millennium Stud 5000</h3><div class="price">₹180 <span class="old">₹257</span> <span class="discount">30% OFF</span></div><button class="btn" onclick="openOrder('Millennium Stud 5000 – 20g',180)">Buy Now</button></div></article>
   <article class="card"><div class="visual" role="button" tabindex="0" aria-label="Zoom Riya Melody 30ml perfume" onclick="openProductGallery(['assets/riya-melody-30ml-premium.png'],0,'Riya Melody 30ml perfume')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductGallery(['assets/riya-melody-30ml-premium.png'],0,'Riya Melody 30ml perfume')}"><img src="assets/riya-melody-30ml-premium.png" alt="Riya Melody 30ml perfume"><span class="zoom-hint">⌕ Zoom</span></div><div class="body"><span class="tag">RIYA MELODY · 30ml</span><h3>Riya Melody Eau de Parfum</h3><p class="muted">An elegant everyday fragrance in a compact 30ml bottle.</p><div class="price">₹220 <span class="old">₹315</span> <span class="discount">30% OFF</span></div><p class="muted">MRP ₹315 · You save ₹95</p><button class="btn" onclick="openOrder('Riya Melody Eau de Parfum – 30ml',220)">Order Now</button></div></article>
   <article class="card"><div class="visual" role="button" tabindex="0" aria-label="Zoom Riya Melody 50ml perfume blue cap" onclick="openProductGallery(['assets/riya-melody-50ml-blue.png'],0,'Riya Melody 50ml perfume blue cap')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductGallery(['assets/riya-melody-50ml-blue.png'],0,'Riya Melody 50ml perfume blue cap')}"><img src="assets/riya-melody-50ml-blue.png" alt="Riya Melody 50ml perfume blue cap"><span class="zoom-hint">⌕ Zoom</span></div><div class="body"><span class="tag">RIYA MELODY · 50ml</span><h3>Riya Melody Eau de Parfum</h3><p class="muted">A fresh, refined fragrance in a 50ml bottle.</p><div class="price">₹220 <span class="old">₹315</span> <span class="discount">30% OFF</span></div><p class="muted">MRP ₹315 · You save ₹95</p><button class="btn" onclick="openOrder('Riya Melody Eau de Parfum – 50ml Blue',220)">Order Now</button></div></article>
@@ -164,14 +184,23 @@ let currentPrice=220;
 function showShopModal(id){const el=document.getElementById(id);el.style.display='flex';el.offsetHeight;requestAnimationFrame(()=>el.classList.add('is-open'));}
 function hideShopModal(id){const el=document.getElementById(id);el.classList.remove('is-open');setTimeout(()=>{if(!el.classList.contains('is-open'))el.style.display='none';},420);}
 function openOrder(name,price){
+  const modal=document.getElementById('orderModal');
   document.getElementById('product').value=name;
   currentPrice=price;
   document.getElementById('qty').value=1;
   document.getElementById('couponInput').value='';
   updateTotal();
-  showShopModal('orderModal');
+  modal.classList.remove('is-open');
+  modal.classList.add('preparing');
+  modal.style.display='flex';
+  document.body.style.overflow='hidden';
+  window.setTimeout(()=>{
+    modal.classList.remove('preparing');
+    modal.offsetHeight;
+    requestAnimationFrame(()=>modal.classList.add('is-open'));
+  },650);
 }
-function closeOrder(){hideShopModal('orderModal')}
+function closeOrder(){const m=document.getElementById('orderModal');m.classList.remove('preparing');hideShopModal('orderModal');document.body.style.overflow=''}
 
 function getOrderTotals(){
   const qtyInput=document.getElementById('qty');
