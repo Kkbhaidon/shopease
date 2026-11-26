@@ -27,7 +27,7 @@ h1,h2{text-align:center;margin:10px 0 18px}h2{font-size:30px}.intro{text-align:c
 .tag{display:inline-block;background:#562039;color:#ffd8e7;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700}
 .poster{width:100%;height:auto;border-radius:16px;display:block;margin:20px auto 0}
 .offer{background:linear-gradient(120deg,#5c1235,#260f20);border:1px solid #d9ad5570;border-radius:18px;padding:28px;text-align:center}
-.offer strong{color:#ffdc8d}.coupon{display:inline-block;border:1px dashed #ffd98b;padding:10px 18px;border-radius:9px;margin:12px;font-weight:900;letter-spacing:2px}
+.offer strong{color:#ffdc8d}
 footer{background:#160d15;margin-top:60px;padding:30px 18px;text-align:center;color:#cbbcc5;font-size:13px;line-height:1.8}
 .modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;align-items:center;justify-content:center;padding:16px}
 .box{background:#fff7fa;color:#24101c;width:min(480px,100%);border-radius:18px;padding:22px;position:relative;max-height:92vh;overflow:auto}
@@ -57,7 +57,6 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
  <img class="poster" src="assets/riya-melody-fragrance-details.png" alt="Riya Melody perfume product and fragrance notes">
 </section>
 
-<section id="offer"><div class="offer"><div class="eyebrow">A little gift for your first order</div><h2>Enjoy 20% OFF</h2><p>Shop selected Riya Melody fragrances at 30% OFF.</p><div class="coupon">RIYA</div><p class="small">MRP ₹315 · Offer price ₹220 after approximately 30% discount. Confirm the genuine MRP before publishing.</p><button class="btn" onclick="openOrder('Riya Melody – Raspberry Candy',220)">Claim Offer</button></div></section>
 
 
 <section id="tracking">
@@ -82,7 +81,7 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <h2>Complete Your Order</h2><p class="small">Cash on Delivery • Please enter your correct delivery details.</p>
 <form id="orderForm">
 <label>Product</label><input id="product" readonly>
-<div class="row"><div><label for="qty">Quantity (Max 10)</label><select id="qty" required><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></div><div><label for="couponInput">Coupon Code</label><input id="couponInput" type="text" placeholder="Enter RIYA"></div></div>
+<label for="qty">Quantity (Max 10)</label><select id="qty" required><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
 <div class="summary" id="priceSummary">Offer price: ₹220<br>Total payable by COD: ₹220</div>
 <label>Full Name</label><input id="customerName" required maxlength="70" placeholder="Your name">
 <label>Mobile Number</label><input id="mobile" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number">
@@ -97,43 +96,6 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 <div class="modal" id="successModal"><div class="box"><button class="close" onclick="document.getElementById('successModal').style.display='none'">×</button><h2>Order Placed Successfully! 💗</h2><p id="orderId"></p><p class="small">Your order has been received by ShopEase. Please keep your Order ID for reference.</p><button class="btn" onclick="document.getElementById('successModal').style.display='none'">Okay</button></div></div>
 
 
-<!-- Timed promotional popups -->
-<div class="modal" id="promoPopup1" role="dialog" aria-modal="true" aria-labelledby="promoTitle1">
- <div class="box" style="text-align:center">
-  <button class="close" onclick="closePromo(1)" aria-label="Close">×</button>
-  <div class="eyebrow">Limited-time sale</div>
-  <img src="assets/riya-melody-30ml-premium.png" alt="Riya Melody 30ml perfume" style="width:100%;max-height:190px;object-fit:contain;border-radius:12px">
-  <h2 id="promoTitle1">Riya Melody 30ml</h2>
-  <p style="margin:8px 0">A beautiful everyday fragrance at a special price.</p>
-  <div class="price" style="color:#9b1248">₹220 <span class="old">₹315</span></div>
-  <p class="small">Limited-time offer · Cash on Delivery</p>
-  <button class="btn" onclick="buyPromo(1,'Riya Melody Eau de Parfum – 30ml',220,false)">Buy Now</button>
- </div>
-</div>
-<div class="modal" id="promoPopup2" role="dialog" aria-modal="true" aria-labelledby="promoTitle2">
- <div class="box" style="text-align:center">
-  <button class="close" onclick="closePromo(2)" aria-label="Close">×</button>
-  <div class="eyebrow">A special gift for you</div>
-  <h2 id="promoTitle2">Get Extra 20% OFF 💗</h2>
-  <p>Use this coupon at checkout and save more on your perfume.</p>
-  <div class="coupon" style="color:#9b1248;border-color:#9b1248;font-size:24px">RIYA</div>
-  <p class="small">Enter code RIYA at checkout to get 20% extra discount on the order subtotal.</p>
-  <button class="btn" onclick="buyPromo(2,'Riya Melody Eau de Parfum – 30ml',220,true)">Apply Coupon & Buy</button>
- </div>
-</div>
-<div class="modal" id="promoPopup3" role="dialog" aria-modal="true" aria-labelledby="promoTitle3">
- <div class="box" style="text-align:center">
-  <button class="close" onclick="closePromo(3)" aria-label="Close">×</button>
-  <div class="eyebrow">Discover another fragrance</div>
-  <img src="assets/riya-melody-50ml-blue.png" alt="Riya Melody 50ml blue perfume" style="width:100%;max-height:190px;object-fit:contain;border-radius:12px">
-  <h2 id="promoTitle3">Riya Melody 50ml</h2>
-  <p>A fresh, refined fragrance. Make it yours today.</p>
-  <div class="price" style="color:#9b1248">₹220 <span class="old">₹315</span></div>
-  <button class="btn" onclick="buyPromo(3,'Riya Melody Eau de Parfum – 50ml Blue',220,false)">Buy Now</button>
- </div>
-</div>
-
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL="https://tnkodckrxqgmhxnhiqjt.supabase.co";
@@ -141,36 +103,14 @@ const SUPABASE_ANON_KEY="sb_publishable_ZGlNpZGEXIc2EOdYKwoFUA_GzQA0euf";
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentPrice=220;
 
-function openOrder(name,price,applyCoupon=false){
+function openOrder(name,price){
   document.getElementById('product').value=name;
   currentPrice=price;
   document.getElementById('qty').value=1;
-  document.getElementById('couponInput').value=applyCoupon?'RIYA':'';
   updateTotal();
   document.getElementById('orderModal').style.display='flex';
 }
 function closeOrder(){document.getElementById('orderModal').style.display='none'}
-
-let promoTimers=[];
-function closePromo(n){document.getElementById('promoPopup'+n).style.display='none';}
-function buyPromo(n,name,price,applyCoupon){
-  closePromo(n);
-  promoTimers.forEach(clearTimeout);promoTimers=[];
-  openOrder(name,price,applyCoupon);
-}
-function startPromoSequence(){
-  // First offer appears as soon as the page opens.
-  document.getElementById('promoPopup1').style.display='flex';
-  promoTimers.push(setTimeout(()=>{
-    if(!document.getElementById('orderModal').style.display || document.getElementById('orderModal').style.display!=='flex'){
-      closePromo(1);document.getElementById('promoPopup2').style.display='flex';
-    }
-  },20000));
-  promoTimers.push(setTimeout(()=>{
-    if(document.getElementById('promoPopup2').style.display==='flex') closePromo(2);
-    if(document.getElementById('orderModal').style.display!=='flex') document.getElementById('promoPopup3').style.display='flex';
-  },40000));
-}
 
 function getOrderTotals(){
   const qtyInput=document.getElementById('qty');
@@ -179,26 +119,19 @@ function getOrderTotals(){
   q=Math.max(1,Math.min(10,q));
   qtyInput.value=q;
   const subtotal=currentPrice*q;
-  const code=document.getElementById('couponInput').value.trim().toUpperCase();
-  const validCoupon=code==='RIYA';
-  const discount=validCoupon?Math.round(subtotal*0.20):0;
-  return {q,subtotal,code,validCoupon,discount,total:subtotal-discount};
+  return {q,subtotal,discount:0,total:subtotal};
 }
 function updateTotal(){
   const t=getOrderTotals();
   document.getElementById('priceSummary').innerHTML=
-    `Offer price: ₹${currentPrice} × ${t.q}<br>`+
-    `Coupon: ${t.validCoupon?'RIYA applied (20% extra off)':(t.code?'Invalid code':'Not applied')}<br>`+
-    `Coupon savings: ₹${t.discount}<br><b>Total payable by COD: ₹${t.total}</b>`;
+    `Price: ₹${currentPrice} × ${t.q}<br><b>Total payable by COD: ₹${t.total}</b>`;
 }
 document.getElementById('qty').addEventListener('change',updateTotal);
-document.getElementById('couponInput').addEventListener('input',updateTotal);
 
 
 document.getElementById('orderForm').addEventListener('submit',async function(e){
  e.preventDefault(); const t=getOrderTotals();
  if(t.q<1||t.q>10){alert('Quantity 1 se 10 ke beech honi chahiye.');return;}
- if(t.code&&!t.validCoupon){alert('Invalid coupon code. Please enter RIYA.');return;}
  const mobile=document.getElementById('mobile').value.trim(),pin=document.getElementById('pin').value.trim();
  if(!/^[6-9]\d{9}$/.test(mobile)){alert('Please enter a valid 10-digit mobile number.');return;}
  if(!/^\d{6}$/.test(pin)){alert('Please enter a valid 6-digit PIN code.');return;}
@@ -208,17 +141,17 @@ document.getElementById('orderForm').addEventListener('submit',async function(e)
  address:document.getElementById('address').value.trim(),city:document.getElementById('city').value.trim(),
  state:document.getElementById('state').value.trim(),pincode:pin,landmark:document.getElementById('landmark').value.trim()||null,
  product_name:document.getElementById('product').value,quantity:t.q,price_per_item:currentPrice,subtotal:t.subtotal,
- coupon_code:t.validCoupon?'RIYA':null,discount:t.discount,total_amount:t.total,payment_method:'COD',status:'Pending'};
+ coupon_code:null,discount:0,total_amount:t.total,payment_method:'COD',status:'Pending'};
  const btn=this.querySelector('button[type="submit"]'),old=btn.textContent;btn.disabled=true;btn.textContent='Submitting...';
- const {data,error}=await supabaseClient.from('orders').insert(order).select('order_number').single();
+ const {error}=await supabaseClient.from('orders').insert(order);
  btn.disabled=false;btn.textContent=old;
  if(error){console.error(error);alert('Order save nahi hua: '+error.message);return;}
  const placedMobile=mobile;
- document.getElementById('orderId').textContent='Your Order ID: '+data.order_number;
+ document.getElementById('orderId').textContent='Your Order ID: '+id;
  closeOrder();
  this.reset();document.getElementById('qty').value='1';updateTotal();
  // After a successful order, open tracking with the order details already filled in.
- document.getElementById('trackOrderId').value=data.order_number;
+ document.getElementById('trackOrderId').value=id;
  document.getElementById('trackMobile').value=placedMobile;
  goToTracking();
 });
@@ -264,6 +197,6 @@ setInterval(()=>{
 },15000);
 
 document.getElementById('year').textContent=new Date().getFullYear();
-startPromoSequence();
+
 </script>
 </body></html>
