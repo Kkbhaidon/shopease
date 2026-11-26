@@ -51,7 +51,7 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 
 .visual{position:relative;cursor:zoom-in}.zoom-hint{position:absolute;right:8px;bottom:8px;background:#170d16d9;color:#fff;padding:5px 9px;border-radius:20px;font-size:11px;pointer-events:none}
 .gallery-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:1000;align-items:center;justify-content:center;padding:14px;flex-direction:column}
-.gallery-modal{opacity:0;transition:opacity .32s ease}.gallery-modal.open{display:flex;opacity:1}.gallery-title{color:#fff;font-size:14px;margin:0 0 10px;text-align:center}.gallery-main{position:relative;width:min(100%,850px);height:min(72vh,850px);display:flex;align-items:center;justify-content:center}
+.gallery-modal{opacity:0;pointer-events:none;transition:opacity .32s ease}.gallery-modal.open{display:flex;opacity:1;pointer-events:auto}.gallery-title{color:#fff;font-size:14px;margin:0 0 10px;text-align:center}.gallery-main{position:relative;width:min(100%,850px);height:min(72vh,850px);display:flex;align-items:center;justify-content:center}
 .gallery-main img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;user-select:none;touch-action:pan-y;cursor:zoom-in}
 .gallery-main img.zoomed{transform:scale(1.8);cursor:zoom-out;max-width:none;max-height:none}
 /* Slide-by-slide photo transition */
@@ -80,7 +80,7 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 .loader-track{width:118px;height:3px;background:#ffffff28;border-radius:9px;overflow:hidden;margin-top:20px}
 .loader-track:after{content:"";display:block;width:40%;height:100%;background:linear-gradient(90deg,#e91e63,#f5d68e);border-radius:9px;animation:loadbar .85s ease-in-out infinite alternate}
 @keyframes loadbar{from{transform:translateX(-5%)}to{transform:translateX(155%)}}
-.modal.is-open{opacity:1;background:#000b}.modal.is-open .box{transform:translateY(0) scale(1);opacity:1}
+.modal:not(.is-open):not(.preparing){pointer-events:none}.modal.is-open,.modal.preparing{pointer-events:auto}.modal.is-open{opacity:1;background:#000b}.modal.is-open .box{transform:translateY(0) scale(1);opacity:1}
 .btn{transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}.btn:active{transform:scale(.97);filter:brightness(1.12)}.btn:disabled{opacity:.65;cursor:wait}
 .card{transition:transform .2s ease,box-shadow .2s ease}.card:active{transform:scale(.99)}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
@@ -267,10 +267,10 @@ function updateTotal(){
 }
 document.getElementById('qty').addEventListener('change',updateTotal);
 document.getElementById('couponInput').addEventListener('input',updateTotal);
-function closeFirstOrderPopup(){document.getElementById('firstOrderPopup').style.display='none';}
+function closeFirstOrderPopup(){hideShopModal('firstOrderPopup');}
 function claimFirstOffer(){closeFirstOrderPopup();document.getElementById('products').scrollIntoView({behavior:'smooth'});}
 // Show the same first-order offer three times: 15s, 30s and 60s after page load.
-window.addEventListener('load',()=>{[15000,30000,60000].forEach(delay=>setTimeout(()=>{const popup=document.getElementById('firstOrderPopup');const order=document.getElementById('orderModal');if(popup && (!order || order.style.display!=='flex'))popup.style.display='flex';},delay));});
+window.addEventListener('load',()=>{[15000,30000,60000].forEach(delay=>setTimeout(()=>{const popup=document.getElementById('firstOrderPopup');const order=document.getElementById('orderModal');if(popup && popup.style.display!=='flex' && (!order || order.style.display!=='flex'))showShopModal('firstOrderPopup');},delay));});
 
 
 
