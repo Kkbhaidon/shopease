@@ -9,7 +9,17 @@
 <style>
 :root{--pink:#e91e63;--gold:#d9ad55;--ink:#190d16;--cream:#fff7fa}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#100b10;color:#fff;font-family:Arial,Helvetica,sans-serif}
-header{position:sticky;top:0;z-index:10;background:#170d16ee;backdrop-filter:blur(12px);border-bottom:1px solid #ffffff20}
+
+/* Permanent animated first-order offer bar */
+.offer-marquee{position:sticky;top:0;z-index:20;overflow:hidden;height:42px;display:flex;align-items:center;background:linear-gradient(100deg,#7b124b,#e91e63,#9b4dcb,#7b124b);background-size:220% 220%;animation:offerGlow 7s ease infinite;border-bottom:1px solid #ffd98a88;box-shadow:0 4px 18px #e91e6340}
+.offer-marquee-track{display:flex;width:max-content;white-space:nowrap;animation:offerScroll 19s linear infinite}
+.offer-marquee span{display:inline-block;padding:0 28px;color:#fff;font-size:13px;font-weight:900;letter-spacing:.55px;text-shadow:0 1px 4px #5c0030}
+.offer-marquee b{color:#ffe58d}
+@keyframes offerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes offerGlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@media(max-width:650px){.offer-marquee{height:38px}.offer-marquee span{font-size:11px;padding:0 20px}header{top:38px}}
+@media(prefers-reduced-motion:reduce){.offer-marquee-track,.offer-marquee{animation:none}}
+header{position:sticky;top:42px;z-index:10;background:#170d16ee;backdrop-filter:blur(12px);border-bottom:1px solid #ffffff20}
 .nav{max-width:1120px;margin:auto;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .logo{font-size:23px;font-weight:900;letter-spacing:1px;color:#f5d68e}.logo span{color:#fff}
 nav a{color:#fff;text-decoration:none;margin-left:16px;font-size:14px}
@@ -75,6 +85,7 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
   <div class="loader-logo">SHOP<span>EASE</span><span class="loader-spark">✦</span></div>
   <div class="loader-track"></div>
 </div>
+<div class="offer-marquee" role="status" aria-label="10 percent off your first order. Use coupon code FIRST10"><div class="offer-marquee-track"><span>🎁 10% OFF ON YOUR FIRST ORDER — USE CODE <b>FIRST10</b> ✨</span><span>🎁 10% OFF ON YOUR FIRST ORDER — USE CODE <b>FIRST10</b> ✨</span><span>🎁 10% OFF ON YOUR FIRST ORDER — USE CODE <b>FIRST10</b> ✨</span><span>🎁 10% OFF ON YOUR FIRST ORDER — USE CODE <b>FIRST10</b> ✨</span></div></div>
 <header><div class="nav"><div class="logo">SHOP<span>EASE</span> ✦</div><nav><a href="#products">Products</a><a href="#offer">Offers</a><a href="#tracking">Track Order</a><a href="#contact">Contact</a></nav></div></header>
 
 
