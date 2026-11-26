@@ -49,9 +49,27 @@ textarea{min-height:70px;resize:vertical}.row{display:grid;grid-template-columns
 .gallery-thumbs{display:flex;gap:9px;max-width:100%;overflow-x:auto;padding:5px}.gallery-thumbs button{padding:0;border:2px solid transparent;background:none;border-radius:8px;overflow:hidden;flex:0 0 64px;height:64px}.gallery-thumbs button.active{border-color:#f2c66d}.gallery-thumbs img{width:100%;height:100%;object-fit:cover}
 @media(max-width:650px){.gallery-main{height:68vh;width:100%}.gallery-arrow{width:36px;height:36px;font-size:21px}.gallery-prev{left:0}.gallery-next{right:0}.gallery-close{right:10px;top:10px}}
 
+
+/* ShopEase smooth loading and interaction polish */
+#siteLoader{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at 50% 35%,#482033,#100810 70%);opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
+#siteLoader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-logo{font-size:30px;font-weight:900;letter-spacing:2px;color:#f5d68e;text-shadow:0 5px 28px #e91e6355}
+.loader-logo span{color:#fff}.loader-spark{color:#e91e63;margin-left:5px}
+.loader-track{width:118px;height:3px;background:#ffffff28;border-radius:9px;overflow:hidden;margin-top:20px}
+.loader-track:after{content:"";display:block;width:40%;height:100%;background:linear-gradient(90deg,#e91e63,#f5d68e);border-radius:9px;animation:loadbar .85s ease-in-out infinite alternate}
+@keyframes loadbar{from{transform:translateX(-5%)}to{transform:translateX(155%)}}
+.modal{opacity:0;transition:opacity .22s ease}.modal[style*="display: flex"]{opacity:1}
+.box{transform:translateY(12px) scale(.985);transition:transform .22s ease}.modal[style*="display: flex"] .box{transform:translateY(0) scale(1)}
+.btn{transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}.btn:active{transform:scale(.97);filter:brightness(1.12)}.btn:disabled{opacity:.65;cursor:wait}
+.card{transition:transform .2s ease,box-shadow .2s ease}.card:active{transform:scale(.99)}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
+<div id="siteLoader" aria-label="Loading ShopEase" role="status">
+  <div class="loader-logo">SHOP<span>EASE</span><span class="loader-spark">✦</span></div>
+  <div class="loader-track"></div>
+</div>
 <header><div class="nav"><div class="logo">SHOP<span>EASE</span> ✦</div><nav><a href="#products">Products</a><a href="#offer">Offers</a><a href="#tracking">Track Order</a><a href="#contact">Contact</a></nav></div></header>
 
 
@@ -254,6 +272,19 @@ setInterval(()=>{
 },15000);
 
 document.getElementById('year').textContent=new Date().getFullYear();
+
+// Show a brief branded loader on entry; never block the store for long.
+(function(){
+ const loader=document.getElementById('siteLoader');
+ const started=Date.now();
+ function hideLoader(){
+   const wait=Math.max(0,650-(Date.now()-started));
+   setTimeout(()=>{loader.classList.add('hide');setTimeout(()=>loader.remove(),500);},wait);
+ }
+ if(document.readyState==='complete') hideLoader();
+ else window.addEventListener('load',hideLoader,{once:true});
+ setTimeout(()=>{if(document.getElementById('siteLoader'))hideLoader();},2500);
+})();
 
 </script>
 </body></html>
